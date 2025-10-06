@@ -1,35 +1,8 @@
 import { Router } from 'express';
-import User from './models/User';
+import createAccount from './handlers';
 const router = Router();
 
-router.post('/auth/register', async (req, res) => {
-    try{
-        let name = req.body.name;
-        let email = req.body.email;
-        let password = req.body.password;
-    
-        await User.create({
-            name,
-            email,
-            password
-        })
-    
-        res.status(201).json({
-            message: 'Usuario creado exitosamente',
-            user: {
-                name,
-                email,
-                password
-            }
-        });
-    }catch(error){
-        console.log(error);
-        res.status(500).json({
-            message: 'Error al crear el usuario',
-            error
-        });
-    }
-})
+router.post('/auth/register', createAccount);
 
 router.get('/auth/login', (req, res) => {
     res.status(200).json({
